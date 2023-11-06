@@ -82,3 +82,6 @@ or, if output from library warnings is too noisy (Python/library version depende
 * refinement/addition of output variable and parameter documentation
 * --no-empty-values: don't include parameters with no value in output
 * --doc-line-wrap (default to None); generated doc strings currently wrapped at or before column 60
+
+#### Known Problems
+* Two unit tests currently [grdalfa needs to change to grdalpha in manual](https://github.com/CyprienBosserelle/xbeach_gpu/pull/60)
