@@ -84,4 +84,4 @@ or, if output from library warnings is too noisy (Python/library version depende
 * --doc-line-wrap (default to None); generated doc strings currently wrapped at or before column 60
 
 #### Known Problems
-* Two unit tests currently [grdalfa needs to change to grdalpha in manual](https://github.com/CyprienBosserelle/xbeach_gpu/pull/60)
+* Two unit tests currently [grdalfa needs to change to grdalpha in manual](https://github.com/CyprienBosserelle/xbeach_gpu/issues/59)
