@@ -1,6 +1,8 @@
 ### Overview
 Python script to convert XBeach parameter files for use with XBeach-GPU. It can also be used to generate default XBeach-GPU parameters.
 
+Cyprien Bosserelle is the creator of XBeach-GPU which is available in [GitHub](https://github.com/CyprienBosserelle/xbeach_gpu). See also the main [XBeach-GPU](https://cyprienbosserelle.github.io/xbeach_gpu) page for morei information.
+
 An ordinary (non-"reuse") JONSWAP file listed in an XBeach parameters file will also be converted. A directional spread coefficient can be specified to be used in the converted JONSWAP file. Any bathymetry file with `.z` suffix will be replaced with `.dep`. In addition, sea-level and wind boundary files will also be copied to the specified output location.
 
 Requires Python 3.7 or higher and the param library.
@@ -82,6 +84,3 @@ or, if output from library warnings is too noisy (Python/library version depende
 * refinement/addition of output variable and parameter documentation
 * --no-empty-values: don't include parameters with no value in output
 * --doc-line-wrap (default to None); generated doc strings currently wrapped at or before column 60
-
-#### Known Problems
-* Two unit tests currently [grdalfa needs to change to grdalpha in manual](https://github.com/CyprienBosserelle/xbeach_gpu/issues/59)
