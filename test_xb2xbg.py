@@ -203,6 +203,7 @@ def test_transform_params():
                                        xbg_params=xbg_params, xb_params=xb_params,
                                        directional_spread_coefficient=400,
                                        peak_enhancement_factor=3.3,
+                                       use_xb_jonswap_gammajsp_and_s=False,
                                        verbose=False)
         
         xb_params_transformed = transformer.transform_params()

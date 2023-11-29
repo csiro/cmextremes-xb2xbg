@@ -82,5 +82,6 @@ or, if output from library warnings is too noisy (Python/library version depende
 #### Possible Future Work
 * handle TSnode and TSOfile parameters and XBeach equivalents (see npoints, npointvar, tintp)
 * refinement/addition of output variable and parameter documentation
+* when JONSWAP file detected, instead of giving `wavebndtype` check warning, just set it
 * --no-empty-values: don't include parameters with no value in output
 * --doc-line-wrap (default to None); generated doc strings currently wrapped at or before column 60

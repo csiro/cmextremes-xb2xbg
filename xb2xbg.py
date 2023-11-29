@@ -202,7 +202,9 @@ class ParamTransformer:
     def __init__(self, xb_file_root: str, xbg_output_dir: str, use_defaults: bool,
                  xbg_params: XBGParams, xb_params: Dict[str, Any],
                  directional_spread_coefficient: int,
-                 peak_enhancement_factor: float, verbose: bool):
+                 peak_enhancement_factor: float,
+                 use_xb_jonswap_gammajsp_and_s: bool,
+                 verbose: bool):
         """
         :param xb_file_root: root directory for XB input files; may be None
         :param xbg_output_dir: directory for XBG output files; may be None
@@ -210,7 +212,10 @@ class ParamTransformer:
         :param xbg_params: object containing a section of XBG parameters
         :param xb_params: dictionary of XB parameters
         :param directional_spread_coefficient: directional spread coeffient for jonswap
-        :param peak_enhancement_factor: Peak enhancement factor for jonswap
+        :param peak_enhancement_factor: peak enhancement factor for jonswap
+        :param use_xb_jonswap_gammajsp_and_s: use XBeach JONSWAP file's peak enhancement
+                                              factor and directional spread instead of
+                                              directional_spread_coefficient and peak_enhancement_factor?
         :param verbose: verbosity flag
         """
         self.xb_file_root = xb_file_root
@@ -220,6 +225,7 @@ class ParamTransformer:
         self.xb_params = xb_params
         self.directional_spread_coefficient = directional_spread_coefficient
         self.peak_enhancement_factor = peak_enhancement_factor
+        self.use_xb_jonswap_gammajsp_and_s = use_xb_jonswap_gammajsp_and_s
         self.verbose = verbose
 
         # simple XB -> XBG parameter name mapping...
@@ -374,6 +380,7 @@ class ParamTransformer:
                     convert_jonswap(xb_file_path, xbg_file_path,
                                     self.directional_spread_coefficient, 
                                     self.peak_enhancement_factor,
+                                    self.use_xb_jonswap_gammajsp_and_s,
                                     self.verbose)
                     if self.verbose:
                         print("** ensure that wavebndtype is set to 4 to use this JONSWAP file",
@@ -505,6 +512,7 @@ def transform_outvars(xb_params: Dict[str, Any],
 def convert_jonswap(jonswap_in_path: str, jonswap_out_path: str,
                     directional_spread_coefficient: int,
                     peak_enhancement_factor: float,
+                    use_xb_jonswap_gammajsp_and_s: bool,
                     verbose: bool):
     """
     Convert XB jonswap file for use with XBG.
@@ -521,6 +529,7 @@ def convert_jonswap(jonswap_in_path: str, jonswap_out_path: str,
     :param jonswap_out_path: XBG jonswap output file path
     :param directional_spread_coefficient: Directional spread coefficient
     :param peak_enhancement_factor: Peak enhancement factor
+    :param use_xb_jonswap_gammajsp_and_s: use XBeach JONSWAP file's peak enhancement
     :param verbose: verbosity flag
 
     Raises an IOError if the file is not found
@@ -538,14 +547,20 @@ def convert_jonswap(jonswap_in_path: str, jonswap_out_path: str,
     new_jswap.insert(0, "time", times)
 
     # Drop colums 3, 4, 5, and 6. xbeach_gpu does not use 5 and 6
-    # Columns 3 and 4 will be replaced below.
+    # Columns 3 and 4 will optionally be replaced below.
     new_jswap = new_jswap.drop([3, 4, 5, 6], axis=1)
 
-    # Set column 3 to directional spread coefficient
-    new_jswap[3] = [directional_spread_coefficient for n in range(len(jswap))]
+    # Set column 3 to directional spread coefficient or use existing values
+    if not use_xb_jonswap_gammajsp_and_s:
+        new_jswap[3] = [directional_spread_coefficient for n in range(len(jswap))]
+    else:
+        new_jswap[3] = list(jswap.iloc[0:len(jswap), 4])
 
-    # Add gamma (peak enhancement factor) at end
-    new_jswap.insert(5, "4", [peak_enhancement_factor for n in range(len(jswap))])
+    # Add gamma (peak enhancement factor) as last column or use existing values
+    if not use_xb_jonswap_gammajsp_and_s:
+        new_jswap.insert(5, "4", [peak_enhancement_factor for n in range(len(jswap))])
+    else:
+        new_jswap.insert(5, "4", list(jswap.iloc[0:len(jswap), 3]))
 
     # Write new jonswap file as CSV
     new_jswap.to_csv(jonswap_out_path, index=None, header=None)
@@ -648,6 +663,7 @@ def generate(args: argparse.Namespace):
                                            args.gen_defaults, xbg_params, xb_params,
                                            args.directional_spread_coefficient,
                                            args.peak_enhancement_factor,
+                                           args.use_xb_jonswap_gammajsp_and_s,
                                            args.verbose)
             xb_params_transformed = transformer.transform_params()
 
@@ -781,9 +797,16 @@ def create_arg_parser() -> argparse.ArgumentParser:
 
     parser.add_argument("--use-all-known-output-variables", "-u",
                         dest="use_all_known_output_variables",
+                        default=False,
                         action="store_true",
                         help="Allow all known XBG output variables to be used, "
                              "irrespective of uncertainty of relationship to XB")
+
+    parser.add_argument("--use-xb-jonswap-gammajsp-and-s", "-j",
+                        dest="use_xb_jonswap_gammajsp_and_s",
+                        default=False,
+                        action="store_true",
+                        help="Use XBeach JONSWAP peak enhancement factor and directional spread values.")
 
     return parser
 
