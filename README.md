@@ -60,7 +60,7 @@ Requires Python 3.7 or higher and the param library.
     # directional spread coefficient for use in jonswap file conversion; defaults to 400
     python xb2xbg.py --xb-params-path=data/example-XBeach-params.txt --directional-spread-coefficient=300
 
-    # peak enhancement factor for use in jonswap file conversion; defaults to 4.2
+    # peak enhancement factor for use in jonswap file conversion; defaults to 3.3
     python3 xb2xbg.py --xb-params-path=data/example-XBeach-params.txt --peak-enhancement-factor=4.2
 
     # any output variables in XBG where there is some uncertainty re: relationship to XB
