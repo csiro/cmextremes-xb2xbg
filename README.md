@@ -85,3 +85,4 @@ or, if output from library warnings is too noisy (Python/library version depende
 * when JONSWAP file detected, instead of giving `wavebndtype` check warning, just set it
 * --no-empty-values: don't include parameters with no value in output
 * --doc-line-wrap (default to None); generated doc strings currently wrapped at or before column 60
+* change wavebndtype=4 advisory in presence of JONSWAP file to setting that value
