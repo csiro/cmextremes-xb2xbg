@@ -1,0 +1,56 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: xb2xbg
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: David
+    family-names: Benn
+    email: david.benn@csiro.au
+    affiliation: CSIRO
+    orcid: 'https://orcid.org/0000-0003-3839-8643'
+  - given-names: 'Claire '
+    family-names: Trenham
+    email: claire.trenham@csiro.au
+    affiliation: CSIRO
+    orcid: 'https://orcid.org/0000-0003-4258-9936'
+  - given-names: Ron
+    family-names: Hoeke
+    email: ron.hoeke@csiro.au
+    affiliation: CSIRO
+    orcid: 'https://orcid.org/0000-0003-0576-9436'
+  - given-names: Cyprien
+    family-names: Bosserelle
+    email: Cyprien.Bosserelle@niwa.co.nz
+    affiliation: NIWA
+identifiers:
+  - type: url
+    value: 'http://hdl.handle.net/102.100.100/488566?index=1'
+    description: >-
+      XBeach to XBeach-GPU parameter conversion script Data
+      Access Portal collection
+repository-code: 'https://github.com/csiro-internal/cmextremes-xb2xbg'
+url: 'http://hdl.handle.net/102.100.100/488566?index=1'
+abstract: >-
+  Python script (xb2xbg.py) to convert parameters for the
+  XBeach littoral zone modelling software for use with
+  XBeach-GPU, a file of unit test functions, example input
+  parameter and dependent files and expected converted
+  output files (see data directory). Documentation per
+  converted parameter and output variable can optionally be
+  generated. Verbose output provides information about the
+  conversion process and any problems encountered along the
+  way. The conversion process makes use of the XBeach-GPU
+  HTML user manual and the script incorporates knowledge of
+  the differences between XBeach and XBeach-GPU parameters
+  and variables.
+keywords:
+  - ocean wave modelling
+  - translation
+license: MIT
+version: 1.0.0
+date-released: '2023-11-06'
