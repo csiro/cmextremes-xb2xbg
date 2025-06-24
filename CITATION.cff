@@ -33,7 +33,7 @@ identifiers:
     description: >-
       XBeach to XBeach-GPU parameter conversion script Data
       Access Portal collection
-repository-code: 'https://github.com/csiro-internal/cmextremes-xb2xbg'
+repository-code: 'https://github.com/csiro/cmextremes-xb2xbg'
 url: 'http://hdl.handle.net/102.100.100/488566?index=1'
 abstract: >-
   Python script (xb2xbg.py) to convert parameters for the
